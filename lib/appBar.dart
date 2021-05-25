@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 
-
 class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   var controller;
@@ -14,29 +13,28 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: Colors.white,
-          child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+    return Padding(
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+        child: Column(
+          children: [
+            Container(
+              color: Colors.white,
               child: TextField(
-                onChanged: onItemChanged,
-                controller: controller,
-                decoration: InputDecoration(
-                  suffixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(),
-                  labelText: 'Поиск точки обслуживания',
-                ),
-              )
-          ),
+                    onChanged: onItemChanged,
+                    controller: controller,
+                    decoration: InputDecoration(
+                      suffixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(),
+                      labelText: 'Поиск точки обслуживания',
+                    ),
+                  )
+            ),
+          ],
         ),
-      ],
     );
   }
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(75);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
 }

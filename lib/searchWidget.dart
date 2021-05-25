@@ -9,25 +9,22 @@ import 'appBar.dart';
 import 'member.dart';
 import 'strings.dart';
 
+class SearchWidget extends StatefulWidget {
+  @override
+  createState() => SearchState();
+}
+
 class SearchState extends State<SearchWidget> {
   TextEditingController _controller = new TextEditingController();
 
   void _showToast(String nameOrganization) => Fluttertoast.showToast(
       msg: "Выбрано $nameOrganization", toastLength: Toast.LENGTH_SHORT);
 
-  late int _selectedIndex = -1;
+  int _selectedIndex = -1;
   int _selectedId = -1;
 
-  static List<Member> myList = [
-    Member(1, "Бош Авто Сервис Аллигатор",
-        "Улица Сурена Шаумяна, дом 47, Москва", false, false),
-    Member(2, "Stop&Clean",
-        "7-я Кожуховская ул., 9, Москва, (ТРЦ Мозайка, этаж -1)", true, true),
-    Member(3, "Клаксон", "Улица К. Либкнехта, дом 2, Архангельск", true, false),
-    Member(4, "Мойка и Шиномонтаж 24",
-        "Улица Большая Московская, дом 12, Владимир", false, false),
-    Member(5, "Революция", "Улица Пушкина, дом 5, Орел", false, false),
-  ];
+  static List<Member> myList = [];
+
   List<Member> newMyList = List.from(myList);
 
   final _titleFont =
@@ -47,7 +44,7 @@ class SearchState extends State<SearchWidget> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _parseJson();
   }
 
   @override
@@ -70,36 +67,40 @@ class SearchState extends State<SearchWidget> {
         ],
         bottom: MyCustomAppBar(_controller, onItemChanged),
       ),
-      body: ListView.builder(
-          itemCount: newMyList.length * 2,
-          itemBuilder: (BuildContext context, int position) {
-            if (position.isOdd) return Divider();
-            final index = position ~/ 2;
-            return _buildRow(index);
-          }),
-      floatingActionButton: SizedBox(
-        width: 390,
-        height: 65,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            if (_selectedIndex != -1) {
-              _showToast(myList[_selectedId-1].name);
-            }
-          },
-          label: const Text(
-            Strings.FABText,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
+      body: ListView.separated(
+              itemCount: newMyList.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider();
+              },
+              itemBuilder: (BuildContext context, int index) {
+                return _buildRow(index);
+              },
             ),
-          ),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          backgroundColor: Colors.yellow[600],
-          elevation: 0,
-        ),
-      ),
+      floatingActionButton: Padding(
+          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+          child: SizedBox(
+            width: double.infinity,
+            height: 65,
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                if (_selectedIndex != -1) {
+                  _showToast(myList[_selectedId - 1].name);
+                }
+              },
+              label: const Text(
+                Strings.FABText,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              backgroundColor: Colors.yellow[600],
+              elevation: 0,
+            ),
+          )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -157,17 +158,14 @@ class SearchState extends State<SearchWidget> {
         ));
   }
 
-  _loadData() async {
-    setState(() {
-      final membersJSON = json.decode('assets/jsonExample.json');
-      var user = Member.fromJson(membersJSON);
-      print(user);
-    });
+  void _parseJson() async {
+    var jsonFile = await DefaultAssetBundle.of(context)
+        .loadString("assets/jsonExample.json");
+    var decodeJson = json.decode(jsonFile);
+    for (int i = 0; i < decodeJson.length; i++) {
+      var ccc = Member.fromJson(decodeJson[i]);
+      myList.add(ccc);
+    }
+    newMyList = List.from(myList);
   }
-
-}
-
-class SearchWidget extends StatefulWidget {
-  @override
-  createState() => SearchState();
 }

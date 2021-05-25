@@ -5,16 +5,7 @@ class Member {
   final bool online;
   final bool placeType;
 
-  Member(this.id, this.name, this.location, this.online, this.placeType) {
-    if (name == null) {
-      throw new ArgumentError("login of Member cannot be null. "
-          "Received: '$name'");
-    }
-    if (location == null) {
-      throw new ArgumentError("avatarUrl of Member cannot be null. "
-          "Received: '$location'");
-    }
-  }
+  Member(this.id, this.name, this.location, this.online, this.placeType);
 
   Member.fromJson(Map<String, dynamic> json)
       : id = json['id'],
