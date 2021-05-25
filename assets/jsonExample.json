@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Бош Авто Сервис Аллигатор",
+    "location": "Улица Сурена Шаумяна, дом 47, Москва",
+    "online": false,
+    "placeType": false
+  },
+  {
+    "id": 2,
+    "name": "Stop&Clean",
+    "location": "7-я Кожуховская ул., 9, Москва, (ТРЦ Мозайка, этаж -1)",
+    "online": true,
+    "placeType": true
+  },
+  {
+    "id": 3,
+    "name": "Клаксон",
+    "location": "Улица К. Либкнехта, дом 2, Архангельск",
+    "online": true,
+    "placeType": false
+  },
+  {
+    "id": 4,
+    "name": "Мойка и Шиномонтаж 24",
+    "location": "Улица Большая Московская, дом 12, Владимир",
+    "online": false,
+    "placeType": false
+  },
+  {
+    "id": 5,
+    "name": "Революция",
+    "location": "Улица Пушкина, дом 5, Орел",
+    "online": false,
+    "placeType": false
+  }
+]
