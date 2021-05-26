@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'appBar.dart';
+import 'consts.dart';
 import 'member.dart';
 import 'strings.dart';
 
@@ -52,21 +53,25 @@ class SearchState extends State<SearchWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(
-          Strings.appTitle,
-          style: TextStyle(
-            color: Colors.black,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(Consts.heightAppBar),
+        child: AppBar(
+          centerTitle: true,
+          title: Text(
+            Strings.appTitle,
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
+          backgroundColor: Colors.white,
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.quiz_outlined),
+                color: Colors.grey)
+          ],
+          bottom: MyCustomAppBar(_controller, onItemChanged),
         ),
-        backgroundColor: Colors.white,
-        actions: <Widget>[
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.quiz_outlined),
-              color: Colors.grey)
-        ],
-        bottom: MyCustomAppBar(_controller, onItemChanged),
       ),
       body: ListView.separated(
               itemCount: newMyList.length,
@@ -170,6 +175,5 @@ class SearchState extends State<SearchWidget> {
     setState(() {
       newMyList = List.from(myList);
     });
-
   }
 }
