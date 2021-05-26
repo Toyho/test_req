@@ -45,6 +45,7 @@ class SearchState extends State<SearchWidget> {
   void initState() {
     super.initState();
     _parseJson();
+    onItemChanged("");
   }
 
   @override
@@ -166,6 +167,9 @@ class SearchState extends State<SearchWidget> {
       var ccc = Member.fromJson(decodeJson[i]);
       myList.add(ccc);
     }
-    newMyList = List.from(myList);
+    setState(() {
+      newMyList = List.from(myList);
+    });
+
   }
 }
